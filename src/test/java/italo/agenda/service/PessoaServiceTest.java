@@ -32,10 +32,13 @@ public class PessoaServiceTest {
     @Test
     @DBSession
     public void testRegistraPessoa() {
+        SaveEnderecoRequest enderReq = new SaveEnderecoRequest();
+        enderReq.setPrincipal( true );
+
         RegistroPessoaRequest request = new RegistroPessoaRequest();
         request.setNome( "zzz" );
         request.setDataNascimento( new Date() );
-        request.setEndereco( new SaveEnderecoRequest() );
+        request.setEndereco( enderReq );
 
         try {
             pessoaService.registra( request );            
@@ -49,6 +52,15 @@ public class PessoaServiceTest {
             fail( "Deveria lançar exceção sobre nome já existir registrado." );
         } catch (ErrorException e) {
 
+        }
+
+        try {
+            request.setNome( "zzzzzz" );
+            enderReq.setPrincipal( false );
+            pessoaService.registra( request );
+            fail( "Deveria lançar exceção sobre marcar o único endereço como não principal." );
+        } catch ( ErrorException e ) {
+            
         }
         
     }

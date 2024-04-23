@@ -25,6 +25,7 @@ public class PessoaService {
     @Autowired
     private PessoaBuilder pessoaBuilder;
 
+    @Transactional
     public void registra( RegistroPessoaRequest request ) throws ErrorException {
         String nome = request.getNome();
 
@@ -71,7 +72,7 @@ public class PessoaService {
     @Transactional(readOnly = true)
     public List<GetPessoaResponse> lista() throws ErrorException {
         List<Pessoa> pessoas = pessoaRepository.findAll();        
-        return pessoaBuilder.loadResps( pessoas ); 
+        return pessoaBuilder.buildResps( pessoas ); 
     }
 
     @Transactional(readOnly = true)
@@ -79,7 +80,7 @@ public class PessoaService {
         String nlike = "%"+nomeLike+"%";
 
         List<Pessoa> pessoas = pessoaRepository.filtraPorNome( nlike );        
-        return pessoaBuilder.loadResps( pessoas );
+        return pessoaBuilder.buildResps( pessoas );
     }
 
     public void deleta( Long pessoaId ) throws ErrorException {

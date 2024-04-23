@@ -15,6 +15,6 @@ public class SaveEnderecoRequest {
 
     private String estado;
 
-    private String principal;
+    private boolean principal;
 
 }

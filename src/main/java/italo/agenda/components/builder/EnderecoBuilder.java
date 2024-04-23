@@ -1,5 +1,8 @@
 package italo.agenda.components.builder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import italo.agenda.model.Endereco;
@@ -16,6 +19,7 @@ public class EnderecoBuilder {
         endereco.setNumero( request.getNumero() ); 
         endereco.setCidade( request.getCidade() );
         endereco.setEstado( request.getEstado() ); 
+        endereco.setPrincipal( request.isPrincipal() );
     }
 
     public void loadResp( EnderecoResponse resp, Endereco ender ) {
@@ -25,6 +29,19 @@ public class EnderecoBuilder {
         resp.setNumero( ender.getNumero() );
         resp.setCidade( ender.getCidade() );
         resp.setEstado( ender.getEstado() ); 
+        resp.setPrincipal( ender.isPrincipal() );
+    }
+
+    public List<EnderecoResponse> buildResps( List<Endereco> enderecos ) {
+        List<EnderecoResponse> respList = new ArrayList<>();
+
+        for( Endereco e : enderecos ) {
+            EnderecoResponse resp = this.novoResp();
+            this.loadResp( resp, e );
+            respList.add( resp );
+        }
+
+        return respList;
     }
 
     public Endereco novoBean( Pessoa pessoa ) {

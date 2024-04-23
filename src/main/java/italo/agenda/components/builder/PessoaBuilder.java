@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import italo.agenda.exception.ErrorCode;
+import italo.agenda.exception.ErrorException;
 import italo.agenda.model.Endereco;
 import italo.agenda.model.Pessoa;
 import italo.agenda.model.request.pessoa.RegistroPessoaRequest;
@@ -20,7 +22,10 @@ public class PessoaBuilder {
     @Autowired
     private EnderecoBuilder enderecoBuilder;
 
-    public void loadBean( Pessoa pessoa, RegistroPessoaRequest request ) {
+    public void loadBean( Pessoa pessoa, RegistroPessoaRequest request ) throws ErrorException {
+        if ( !request.getEndereco().isPrincipal() )
+            throw new ErrorException( ErrorCode.PESSOA_SEM_ENDERECO_PRINCIPAL );
+
         pessoa.setNome( request.getNome() );
         pessoa.setDataNascimento( request.getDataNascimento() );
         
@@ -55,7 +60,7 @@ public class PessoaBuilder {
         }
     }
 
-    public List<GetPessoaResponse> loadResps( List<Pessoa> pessoas ) {
+    public List<GetPessoaResponse> buildResps( List<Pessoa> pessoas ) {
         List<GetPessoaResponse> respList = new ArrayList<>();
 
         for( Pessoa p : pessoas ) {
