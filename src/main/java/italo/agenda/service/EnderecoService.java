@@ -49,19 +49,19 @@ public class EnderecoService {
     }
 
     @Transactional
-    public void alterEnderParaPrincipal( Long enderecoId ) throws ErrorException {
+    public void alterEndereco( Long enderecoId, SaveEnderecoRequest request ) throws ErrorException {
         Optional<Endereco> enderOp = enderecoRepository.findById( enderecoId );
         if ( !enderOp.isPresent() )
             throw new ErrorException( ErrorCode.ENDERECO_NAO_ENCONTRADO );
 
         Endereco ender = enderOp.get();
 
-        if ( !ender.isPrincipal() ) {      
+        if ( request.isPrincipal() && !ender.isPrincipal() ) {      
             Pessoa pessoa = ender.getPessoa();
             enderecoRepository.setPrincipaisParaFalse( pessoa.getId() );
         }
 
-        ender.setPrincipal( true );    
+        enderecoBuilder.loadBean( ender, request );  
         enderecoRepository.save( ender );
     }
 
