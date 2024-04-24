@@ -12,12 +12,12 @@ de dados está no arquivo MER.jpg.
 
 A principal linguagem de programação utilizada é a linguagem java. Veja as tecnologias utilizadas abaixo:
 
-* Java
-* Spring Boot
-* JUnit
-* H2
+* Java 17
+* Spring Boot 3.2.5
+* JUnit 5
+* H2 2.2.24
 * Swagger/OpenAPI
-* Maven
+* Maven 3.9.6
 * VS Code
 
 ## O banco de dados
