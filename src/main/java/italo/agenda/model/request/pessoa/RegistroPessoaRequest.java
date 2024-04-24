@@ -13,7 +13,7 @@ public class RegistroPessoaRequest {
     @NotEmpty(message = "{nome.obrigatorio}")
     private String nome;
 
-    @NotEmpty(message = "{data.de.nascimento.obrigatoria}")    
+    @NotNull(message = "{data.de.nascimento.obrigatoria}")    
     private Date dataNascimento;
 
     @NotNull(message = "{endereco.obrigatorio}")

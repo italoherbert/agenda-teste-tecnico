@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import italo.agenda.apidoc.pessoa.AlteraPessoaEndpoint;
+import italo.agenda.apidoc.pessoa.DeletaPessoaEndpoint;
+import italo.agenda.apidoc.pessoa.FiltraPessoasPorNomeEndpoint;
+import italo.agenda.apidoc.pessoa.GetPessoaEndpoint;
+import italo.agenda.apidoc.pessoa.ListaPessoasEndpoint;
+import italo.agenda.apidoc.pessoa.RegistraPessoaEndpoint;
 import italo.agenda.exception.ErrorException;
 import italo.agenda.model.request.pessoa.RegistroPessoaRequest;
 import italo.agenda.model.request.pessoa.SavePessoaRequest;
@@ -29,6 +35,7 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
+    @RegistraPessoaEndpoint
     @PostMapping("/")
     public ResponseEntity<Object> registra( 
             @Valid @RequestBody RegistroPessoaRequest request ) throws ErrorException {
@@ -36,6 +43,7 @@ public class PessoaController {
         return ResponseEntity.ok().build();
     }
 
+    @AlteraPessoaEndpoint
     @PutMapping("/{pessoaId}")
     public ResponseEntity<Object> altera(
             @PathVariable Long pessoaId, 
@@ -45,18 +53,21 @@ public class PessoaController {
         return ResponseEntity.ok().build();         
     }
 
+    @GetPessoaEndpoint
     @GetMapping("/{pessoaId}")    
     public ResponseEntity<Object> get( @PathVariable Long pessoaId ) throws ErrorException {
         GetPessoaResponse resp = pessoaService.get( pessoaId );
         return ResponseEntity.ok( resp );        
     }
 
+    @ListaPessoasEndpoint
     @GetMapping("/lista")    
     public ResponseEntity<Object> lista() throws ErrorException {
         List<GetPessoaResponse> lista = pessoaService.lista();
         return ResponseEntity.ok( lista );        
     }
 
+    @FiltraPessoasPorNomeEndpoint
     @GetMapping("/filtra")
     public ResponseEntity<Object> filtraPorNome(
             @Valid @NotEmpty(message = "nome.obrigatorio") 
@@ -65,6 +76,7 @@ public class PessoaController {
         return ResponseEntity.ok( lista ); 
     }
 
+    @DeletaPessoaEndpoint
     @DeleteMapping("/{pessoaId}")
     public ResponseEntity<Object> deleta(
             @PathVariable Long pessoaId ) throws ErrorException {
