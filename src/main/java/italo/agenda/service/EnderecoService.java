@@ -57,7 +57,7 @@ public class EnderecoService {
         Endereco ender = enderOp.get();
 
         if ( ender.isPrincipal() && !request.isPrincipal() )
-            throw new ErrorException( ErrorCode.PESSOA_SEM_ENDERECO_PRINCIPAL );
+            throw new ErrorException( ErrorCode.REGISTRO_SEM_ENDERECO_PRINCIPAL );
 
         if ( request.isPrincipal() && !ender.isPrincipal() ) {      
             Pessoa pessoa = ender.getPessoa();
@@ -83,7 +83,7 @@ public class EnderecoService {
     public EnderecoResponse getEnderPrincipal( Long pessoaId ) throws ErrorException {
         Optional<Endereco> enderOp = enderecoRepository.getEnderPrincipal( pessoaId );
         if ( !enderOp.isPresent() )        
-            throw new ErrorException( ErrorCode.PESSOA_SEM_ENDERECO_PRINCIPAL );
+            throw new ErrorException( ErrorCode.REGISTRO_SEM_ENDERECO_PRINCIPAL );
 
         Endereco ender = enderOp.get();
 
@@ -101,6 +101,10 @@ public class EnderecoService {
         Optional<Endereco> enderOp = enderecoRepository.findById( enderecoId );
         if ( !enderOp.isPresent() )
             throw new ErrorException( ErrorCode.ENDERECO_NAO_ENCONTRADO );
+
+        Endereco ender = enderOp.get();
+        if ( ender.isPrincipal() )
+            throw new ErrorException( ErrorCode.REMOCAO_ENDERECO_PRINCIPAL );
 
         enderecoRepository.deleteById( enderecoId ); 
     }

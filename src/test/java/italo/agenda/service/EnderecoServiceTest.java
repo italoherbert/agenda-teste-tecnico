@@ -187,15 +187,43 @@ public class EnderecoServiceTest {
             SaveEnderecoRequest request = new SaveEnderecoRequest();
             request.setPrincipal( true );
 
-            enderecoService.adicionaEndereco( pessoaId , request );
+            Long enderId = enderecoService.adicionaEndereco( pessoaId , request );
 
             lista = enderecoService.listaEnderecosPorPessoa( pessoaId );
             assertEquals( lista.size(), quant+1 );
 
-            enderecoService.deleta( pessoaId );
+            try {
+                enderecoService.deleta( enderId );
+                fail( "Deveria lançar exceção porque esse endereço está como principal." );
+            } catch ( ErrorException e ) {
+
+            }            
+        } catch ( ErrorException e ) {
+            e.printStackTrace();
+            fail( e.getErrorChave() );
+        }
+    }
+
+    @Test
+    @DBSession
+    public void testDeleta() {
+        Long enderId = 5L;
+
+        try {
+            EnderecoResponse ender = enderecoService.get( enderId );
+            assertNotNull( ender );
+
+            Long pessoaId = ender.getPessoaId();
+
+            List<EnderecoResponse> lista = enderecoService.listaEnderecosPorPessoa( pessoaId );
+            assertFalse( lista.isEmpty() );
+            
+            int quant = lista.size();
+
+            enderecoService.deleta( enderId );
 
             lista = enderecoService.listaEnderecosPorPessoa( pessoaId );
-            assertEquals( lista.size(), quant );
+            assertEquals( lista.size(), quant-1 );
         } catch ( ErrorException e ) {
             e.printStackTrace();
             fail( e.getErrorChave() );

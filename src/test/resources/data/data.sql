@@ -28,3 +28,5 @@ insert into endereco ( id, cidade, estado, principal, pessoa_id ) values ( 1, 'A
 insert into endereco ( id, cidade, estado, principal, pessoa_id ) values ( 2, 'B', 'B', true, 2 );
 insert into endereco ( id, cidade, estado, principal, pessoa_id ) values ( 3, 'C', 'C', true, 3 );
 insert into endereco ( id, cidade, estado, principal, pessoa_id ) values ( 4, 'D', 'D', true, 4 );
+insert into endereco ( id, cidade, estado, principal, pessoa_id ) values ( 5, 'F', 'F', false, 1 );
+insert into endereco ( id, cidade, estado, principal, pessoa_id ) values ( 6, 'G', 'G', false, 1 );

@@ -1,5 +1,10 @@
 package italo.agenda.apidoc.endereco;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,6 +27,8 @@ import italo.agenda.model.response.ErroResponse;
 			mediaType = "application/json", 
 			schema = @Schema(implementation = ErroResponse.class)))
 })
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 public @interface DeletaEnderecoEndpoint {
     
 }

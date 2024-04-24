@@ -10,8 +10,9 @@ public interface ErrorCode {
     
     public final static String PESSOA_JA_EXISTE = "pessoa.ja.existe";
     public final static String PESSOA_NAO_ENCONTRADA = "pessoa.nao.encontrada";
-    public final static String PESSOA_SEM_ENDERECO_PRINCIPAL = "pessoa.sem.endereco.principal";
+    public final static String REGISTRO_SEM_ENDERECO_PRINCIPAL = "pessoa.sem.endereco.principal";
 
     public final static String ENDERECO_NAO_ENCONTRADO = "endereco.nao.encontrado";
+    public final static String REMOCAO_ENDERECO_PRINCIPAL = "remocao.endereco.principal";
 
 }

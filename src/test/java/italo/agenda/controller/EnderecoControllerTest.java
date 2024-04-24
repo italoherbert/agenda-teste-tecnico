@@ -54,7 +54,7 @@ public class EnderecoControllerTest {
 
         try {
             mockMvc.perform( 
-                post("/api/enderecos/"+pessoaId )
+                post("/api/enderecos/pessoa/"+pessoaId )
                     .contentType( MediaType.APPLICATION_JSON )
                     .content( objectMapper.writeValueAsBytes( request ) ) )
                 .andDo( print() ) 
@@ -95,7 +95,7 @@ public class EnderecoControllerTest {
 
         try {
             mockMvc.perform( 
-                get("/api/enderecos/principal/"+pessoaId ) )
+                get("/api/enderecos/pessoa/"+pessoaId+"/principal" ) )
                 .andDo( print() ) 
                     .andExpect( status().is( 200 ) );
         } catch ( Exception e ) {
@@ -127,7 +127,7 @@ public class EnderecoControllerTest {
 
         try {
             mockMvc.perform( 
-                get("/api/enderecos/porpessoa/"+pessoaId ) )
+                get("/api/enderecos/pessoa/"+pessoaId+"/porpessoa") )
                 .andDo( print() ) 
                     .andExpect( status().is( 200 ) );
         } catch ( Exception e ) {
@@ -139,7 +139,7 @@ public class EnderecoControllerTest {
     @Test
     @DBSession
     public void testDelete() {
-        Long enderId = 2L;
+        Long enderId = 5L;
 
         try {
             mockMvc.perform( 

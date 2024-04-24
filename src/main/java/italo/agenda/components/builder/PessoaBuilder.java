@@ -24,7 +24,7 @@ public class PessoaBuilder {
 
     public void loadBean( Pessoa pessoa, RegistroPessoaRequest request ) throws ErrorException {
         if ( !request.getEndereco().isPrincipal() )
-            throw new ErrorException( ErrorCode.PESSOA_SEM_ENDERECO_PRINCIPAL );
+            throw new ErrorException( ErrorCode.REGISTRO_SEM_ENDERECO_PRINCIPAL );
 
         pessoa.setNome( request.getNome() );
         pessoa.setDataNascimento( request.getDataNascimento() );

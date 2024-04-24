@@ -33,7 +33,7 @@ public class EnderecoController {
     private EnderecoService enderecoService;
 
     @AdicionaEnderecoEndpoint
-    @PostMapping("/{pessoaId}") 
+    @PostMapping("/pessoa/{pessoaId}") 
     public ResponseEntity<Object> adiciona( 
             @PathVariable Long pessoaId, 
             @Valid @RequestBody SaveEnderecoRequest request ) throws ErrorException {
@@ -51,7 +51,7 @@ public class EnderecoController {
     }
 
     @GetEnderecoPrincipalEndpoint
-    @GetMapping("/principal/{pessoaId}")
+    @GetMapping("/pessoa/{pessoaId}/principal")
     public ResponseEntity<Object> getEnderPrincipal( 
             @PathVariable Long pessoaId ) throws ErrorException {
         EnderecoResponse resp = enderecoService.getEnderPrincipal( pessoaId );
@@ -67,7 +67,7 @@ public class EnderecoController {
     }
 
     @ListaEnderecosPorPessoaEndpoint
-    @GetMapping("/porpessoa/{pessoaId}")
+    @GetMapping("/pessoa/{pessoaId}/porpessoa")
     public ResponseEntity<Object> listaPorPessoa( 
             @PathVariable Long pessoaId ) throws ErrorException {
         List<EnderecoResponse> lista = enderecoService.listaEnderecosPorPessoa( pessoaId );
