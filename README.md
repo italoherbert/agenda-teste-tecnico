@@ -45,7 +45,7 @@ password=
 Primeiramente faça o clone deste projeto, em:
 
 ```
-git clone hhttps://github.com/italoherbert/agenda-teste-tecnico.git
+git clone https://github.com/italoherbert/agenda-teste-tecnico.git
 ```
 
 Feito isto, entre na pasta do projeto que deve ter o nome "agenda-teste-tecnico" e execute o seguinte comando MAVEN:
