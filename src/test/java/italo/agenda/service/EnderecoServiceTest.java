@@ -1,6 +1,7 @@
 package italo.agenda.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -51,6 +52,11 @@ public class EnderecoServiceTest {
             }
 
             assertEquals( count, 1 );
+
+            EnderecoResponse enderResp = enderecoService.getEnderPrincipal( pessoaId );
+            assertNotNull( enderResp );
+            assertEquals( enderResp.getId(), enderId );
+            assertTrue( enderResp.isPrincipal() );
         } catch ( ErrorException e ) {
             e.printStackTrace();
             fail( e.getErrorChave() );
@@ -89,12 +95,89 @@ public class EnderecoServiceTest {
     }
 
     @Test
-    public void testGetEndereco() {
+    @DBSession
+    public void testAlterEnder() {
+        Long enderId = 3L;
+
+        SaveEnderecoRequest request = new SaveEnderecoRequest();
+        request.setCidade( "ABC" );
+        request.setEstado( "AB" );
+        request.setPrincipal( true );
         
+        try {
+            enderecoService.alterEndereco( enderId, request );
+
+            EnderecoResponse enderResp = enderecoService.get( enderId );
+            assertNotNull( enderResp );
+
+            Long pessoaId = enderResp.getPessoaId();
+
+            int countEnderPrincipais = 0;
+
+            List<EnderecoResponse> enderecos = enderecoService.listaEnderecosPorPessoa( pessoaId );
+            for( EnderecoResponse ender : enderecos ) {                
+                if ( ender.getId() == enderId )
+                    assertTrue( ender.isPrincipal() );                                
+
+                if ( ender.isPrincipal() )
+                    countEnderPrincipais++;
+            }
+
+            assertEquals( countEnderPrincipais, 1 );  
+
+            try {
+                request.setPrincipal( false );
+                enderecoService.alterEndereco( enderId, request );              
+                fail( "Deveria lançar exceção. Pessoa sem endereço principal" );
+            } catch ( ErrorException e ) {
+
+            }
+        } catch ( ErrorException e ) {
+            e.printStackTrace();
+            fail( e.getErrorChave() );
+        }
     }
 
     @Test
-    public void testEndereco() {
+    @DBSession
+    public void testGetEndereco() {
+        Long enderId = 3L;
+
+        try {
+            EnderecoResponse ender = enderecoService.get( enderId );
+            assertEquals( ender.getId(), enderId );
+        } catch ( ErrorException e ) {
+            e.printStackTrace();
+            fail( e.getErrorChave() );
+        }
+    }
+
+    @Test
+    @DBSession
+    public void testGetEnderPrincipal() {
+        Long pessoaId = 3L;
+
+        SaveEnderecoRequest request = new SaveEnderecoRequest();
+        request.setCidade( "ABC" );
+        request.setEstado( "AB" );
+        request.setPrincipal( true );
+        
+        try {
+            Long enderId = enderecoService.adicionaEndereco( pessoaId, request );            
+
+            EnderecoResponse enderResp = enderecoService.getEnderPrincipal( pessoaId );
+            assertNotNull( enderResp );
+            assertEquals( enderResp.getId(), enderId );
+            assertTrue( enderResp.isPrincipal() );
+        } catch ( ErrorException e ) {
+            e.printStackTrace();
+            fail( e.getErrorChave() );
+        }
+    }
+
+    @Test
+    @DBSession
+    public void testGeral() {
         Long pessoaId = 2L;
         
         try {            

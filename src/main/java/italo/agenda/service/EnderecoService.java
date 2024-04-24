@@ -56,6 +56,9 @@ public class EnderecoService {
 
         Endereco ender = enderOp.get();
 
+        if ( ender.isPrincipal() && !request.isPrincipal() )
+            throw new ErrorException( ErrorCode.PESSOA_SEM_ENDERECO_PRINCIPAL );
+
         if ( request.isPrincipal() && !ender.isPrincipal() ) {      
             Pessoa pessoa = ender.getPessoa();
             enderecoRepository.setPrincipaisParaFalse( pessoa.getId() );
@@ -71,6 +74,18 @@ public class EnderecoService {
             throw new ErrorException( ErrorCode.ENDERECO_NAO_ENCONTRADO );
 
         Endereco ender = enderecoOp.get();
+
+        EnderecoResponse resp = enderecoBuilder.novoResp();
+        enderecoBuilder.loadResp( resp, ender );
+        return resp;
+    }
+
+    public EnderecoResponse getEnderPrincipal( Long pessoaId ) throws ErrorException {
+        Optional<Endereco> enderOp = enderecoRepository.getEnderPrincipal( pessoaId );
+        if ( !enderOp.isPresent() )        
+            throw new ErrorException( ErrorCode.PESSOA_SEM_ENDERECO_PRINCIPAL );
+
+        Endereco ender = enderOp.get();
 
         EnderecoResponse resp = enderecoBuilder.novoResp();
         enderecoBuilder.loadResp( resp, ender );

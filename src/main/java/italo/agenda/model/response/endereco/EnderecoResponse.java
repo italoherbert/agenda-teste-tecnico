@@ -19,4 +19,6 @@ public class EnderecoResponse {
 
     private boolean principal;
 
+    private Long pessoaId;
+
 }

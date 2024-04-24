@@ -30,6 +30,8 @@ public class EnderecoBuilder {
         resp.setCidade( ender.getCidade() );
         resp.setEstado( ender.getEstado() ); 
         resp.setPrincipal( ender.isPrincipal() );
+        
+        resp.setPessoaId( ender.getPessoa().getId() ); 
     }
 
     public List<EnderecoResponse> buildResps( List<Endereco> enderecos ) {
